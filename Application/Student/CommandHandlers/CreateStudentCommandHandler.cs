@@ -23,9 +23,7 @@ public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand,
             HashedPassword = request.Password,
             Grade = request.Grade
         };
-
         var newStudent = await _studentRepository.Register(student);
-
         return newStudent;
     }
 }

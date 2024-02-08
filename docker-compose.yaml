@@ -1,0 +1,13 @@
+services:
+  EschoolMonolith.db:
+    image: postgres
+    restart: always
+    user: postgres
+    environment:
+      POSTGRES_DB: EschoolMonolith
+    ports:
+      - 5100:5432
+    volumes:
+      - eschooldb:/var/lib/postgresql/data
+volumes:
+  eschooldb:
