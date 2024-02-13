@@ -5,10 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddInfrastructure();
+builder.Services.AddDefaultService();
 
 var app = builder.Build();
-
 
 
 if (app.Environment.IsDevelopment())
@@ -23,4 +22,3 @@ app.MapStudentEnpoints();
 
 
 app.Run();
-

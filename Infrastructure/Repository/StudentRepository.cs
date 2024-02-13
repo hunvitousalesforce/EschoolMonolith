@@ -11,34 +11,44 @@ public class StudentRepository : IStudentRepository
     {
         _context = context;
     }
-    public Task<string> Delete(Guid id)
+    public async Task<string> Delete(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var student = _context.Students.Where(s => s.Id == id).FirstAsync();
+        _context.Remove(student);
+        await _context.SaveChangesAsync(cancellationToken);
+        return id.ToString();
     }
 
-    public async Task<Student> FindStudentById(Guid id)
+    public async Task<Student> FindStudentById(Guid id, CancellationToken cancellationToken)
     {
-        Student? student = await _context.Students.Where(s => s.Id == id).FirstOrDefaultAsync();
-        return student;
+        return await _context.Students.Where(s => s.Id == id).SingleAsync();
     }
 
     public async Task<List<Student>> GetAll()
     {
-        var students = await _context.Students.ToListAsync();
-        return students;
+        return await _context.Students.ToListAsync();
     }
 
-    public async Task<Student> Register(Student student)
+    public async Task<Student> Register(Student student, CancellationToken cancellationToken)
     {
-        if (student == null)
-            return null;
         await _context.AddAsync(student);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
         return student;
     }
 
-    public Task<Student> Update(Student student)
+    public async Task<Student> Update(Student student, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var stud = await _context.Students.Where(s => s.Id == student.Id).SingleAsync();
+
+        stud.Firstname = student.Firstname;
+        stud.Lastname = student.Lastname;
+        stud.Gender = student.Gender;
+        stud.Phone = student.Phone;
+        stud.Grade = student.Grade;
+        stud.Email = student.Email;
+        stud.DOB = student.DOB;
+
+        await _context.SaveChangesAsync();
+        return stud;
     }
 }

@@ -12,18 +12,20 @@ public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand,
     }
     public async Task<Student> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
     {
+        var DOB = request.DOB;
+        var studentDOB = new DateOnly(DOB.Year, DOB.Month, DOB.Day);
         var student = new Student
         {
             Firstname = request.Firstname,
             Lastname = request.Lastname,
             Gender = request.Gender,
             Phone = request.Phone,
-            DOB = request.DOB,
+            DOB = studentDOB,
             Email = request.Email,
             HashedPassword = request.Password,
             Grade = request.Grade
         };
-        var newStudent = await _studentRepository.Register(student);
+        var newStudent = await _studentRepository.Register(student, cancellationToken);
         return newStudent;
     }
 }

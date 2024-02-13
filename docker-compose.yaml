@@ -5,6 +5,7 @@ services:
     user: postgres
     environment:
       POSTGRES_DB: EschoolMonolith
+      POSTGRES_PASSWORD: 1234
     ports:
       - 5100:5432
     volumes:
