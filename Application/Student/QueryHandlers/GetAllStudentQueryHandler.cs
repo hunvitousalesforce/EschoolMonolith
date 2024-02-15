@@ -8,6 +8,7 @@ namespace Application;
 public class GetAllStudentQueryHandler : IRequestHandler<GetAllStudentQuery, APIResponse<List<Student>>>
 {
     private readonly IStudentRepository _studentRepository;
+    
     public async Task<APIResponse<List<Student>>> Handle(GetAllStudentQuery request, CancellationToken token)
     {
         var students = await _studentRepository.GetAll();
